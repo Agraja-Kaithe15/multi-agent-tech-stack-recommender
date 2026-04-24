@@ -1,95 +1,177 @@
-# Multi-agent marketing campaign lab
+# Multi-Agent Tech Stack Recommender
 
-A small **multi-agent workflow** that simulates a marketing studio for a **summer sunglasses** campaign. Each stage is handled by a different Gemini-powered “role”: research, visual design, copy, and final packaging into a client-ready report.
+A simple and modular **multi-agent system** that recommends a suitable tech stack based on the user's experience level.
 
-The app is a **Streamlit** front end; orchestration and prompts live in Python using the **Google GenAI SDK** ([Gemini](https://ai.google.dev/gemini-api/docs)) with optional **Tavily** search.
+The system simulates how different AI agents collaborate to analyze input, retrieve data, make decisions, and generate explanations.
 
-## What the pipeline does
+Built using **Streamlit** for the UI and **Google Gemini API** for AI-powered explanations.
 
-| Stage | Role | What happens |
-|--------|------|----------------|
-| 1 | **Market research** | Trend brief using **Google Search grounding** (default) or **Tavily** + a **product catalog** tool (`data/catalog.json`) via function calling. |
-| 2 | **Graphic designer** | Text model proposes a JSON image prompt and caption; a **Gemini image** model generates a hero image saved under `outputs/`. |
-| 3 | **Copywriter** | Multimodal step: image + trends → campaign **quote** and **justification**. |
-| 4 | **Packaging** | Polished **Markdown** executive report written to `outputs/`, downloadable from the UI. |
+---
 
-This is framed as a teaching / demo lab: several billed API calls (text + image) run per full pipeline execution.
+## 🚀 Overview
 
-## Tech stack
+This project demonstrates a **multi-agent pipeline** where each agent performs a specific role in the recommendation process.
 
-- **Python 3.11+** (3.12 or 3.13 recommended)
-- **Streamlit** — UI and configuration sidebar
-- **`google-genai`** — Gemini text + image generation (Google AI Studio / API key auth, not Vertex by default)
-- **`python-dotenv`** — loads `.env` from the project root
-- **Pillow**, **requests** — images and optional Tavily HTTP calls
+### 🔄 Workflow
 
-## Quick start
+1. User selects experience level
+2. Analyzer Agent processes input
+3. Research Agent fetches matching tech stack
+4. Decision Agent finalizes selection
+5. Explanation Agent generates AI-based explanation
 
-1. **Clone the repository**
+---
 
-   ```bash
-   git clone https://github.com/thisislokesh/multi-agentic-system-marketing-agency.git
-   cd multi-agentic-system-marketing-agency
-   ```
+## 🤖 Agents
 
-2. **Create a virtual environment and install dependencies**
+| Agent                 | Role                                           |
+| --------------------- | ---------------------------------------------- |
+| **Analyzer Agent**    | Converts user input into a standardized format |
+| **Research Agent**    | Retrieves matching tech stack from dataset     |
+| **Decision Agent**    | Finalizes the recommended stack                |
+| **Explanation Agent** | Uses Gemini AI to explain the recommendation   |
 
-   ```bash
-   python3 -m venv .venv
-   source .venv/bin/activate   # Windows: .venv\Scripts\activate
-   pip install -r requirements.txt
-   ```
+---
 
-3. **Configure environment variables**
+## 🧠 Tech Stack
 
-   Copy the example file and add your keys (never commit `.env`):
+* **Python 3.10+**
+* **Streamlit** — Frontend UI
+* **Google Gemini API** — AI explanation
+* **python-dotenv** — Environment variable handling
+* **JSON** — Tech stack dataset
 
-   ```bash
-   cp .env.example .env
-   ```
+---
 
-   Edit `.env` and set at least **`GOOGLE_API_KEY`** or **`GEMINI_API_KEY`** from [Google AI Studio](https://aistudio.google.com/apikey).
+## ⚙️ Quick Start
 
-4. **Run the app**
+### 1. Clone the repository
 
-   ```bash
-   streamlit run app.py
-   ```
+```bash
+git clone https://github.com/your-username/tech-stack-recommender.git
+cd tech-stack-recommender
+```
 
-   Open the URL Streamlit prints (usually `http://localhost:8501`). You can paste an API key in the sidebar instead of using `.env`, or use [Streamlit secrets](https://docs.streamlit.io/develop/concepts/connections/secrets-management) (`.streamlit/secrets.toml`) with `GOOGLE_API_KEY` / `GEMINI_API_KEY`.
+### 2. Create virtual environment
 
-## Configuration reference
+```bash
+python -m venv .venv
+.venv\Scripts\activate      # Windows
+# OR
+source .venv/bin/activate   # Mac/Linux
+```
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `GOOGLE_API_KEY` or `GEMINI_API_KEY` | Yes (for real runs) | Google AI Studio API key for the Gemini API. |
-| `GEMINI_TEXT_MODEL` | No | Text model id (default in `.env.example`: `gemini-3-flash-preview`). |
-| `GEMINI_IMAGE_MODEL` | No | Image model id (default: `gemini-3.1-flash-image-preview`). |
-| `USE_TAVILY_SEARCH` | No | Set to `true` to use Tavily instead of Google Search grounding for research. |
-| `TAVILY_API_KEY` | If Tavily enabled | Required when `USE_TAVILY_SEARCH=true`. |
+### 3. Install dependencies
 
-Restart Streamlit after changing `.env`.
+```bash
+pip install -r requirements.txt
+```
 
-## Project layout
+### 4. Configure environment variables
 
-```text
+Create a `.env` file in the root directory:
+
+```
+GOOGLE_API_KEY=your_api_key_here
+```
+
+---
+
+### 5. Run the application
+
+```bash
+streamlit run app.py
+```
+
+Open in browser:
+
+```
+http://localhost:8501
+```
+
+---
+
+## 📁 Project Structure
+
+```
 .
-├── app.py                 # Streamlit UI
-├── config.py              # Env loading, API key helpers, model defaults
-├── gemini_agents.py       # Multi-step campaign pipeline
-├── tools/                 # Function-calling tools (catalog, Tavily search)
-├── data/catalog.json      # Demo product catalog for the researcher agent
-├── outputs/               # Generated images + Markdown (gitignored except .gitkeep)
+├── app.py                  # Streamlit UI
+├── agents.py              # Multi-agent pipeline logic
+├── config.py              # API key & configuration
+├── tools/
+│   ├── tech_catalog.py    # Loads JSON dataset
+│   ├── tech_search.py     # Search logic
+├── data/
+│   └── tech_stack.json    # Tech stack dataset
+├── outputs/               # (optional) generated outputs
 ├── requirements.txt
-├── .env.example           # Template only — copy to `.env` locally
+├── .env.example
 └── README.md
 ```
 
-## Security notes
+---
 
-- **Do not commit `.env`.** It is listed in `.gitignore` and should stay on your machine (or use CI secrets / Streamlit Cloud secrets in deployment).
-- Use a **dedicated API key** with usage limits for experiments and teaching.
+## 💡 Example
 
-## Repository
+### Input:
 
-Upstream project: [thisislokesh/multi-agentic-system-marketing-agency](https://github.com/thisislokesh/multi-agentic-system-marketing-agency).
+* Experience: Beginner
+
+### Output:
+
+* Frontend: React
+* Backend: Node.js
+* Database: MongoDB
+* Hosting: Vercel
+
+👉 Plus an AI-generated explanation of why this stack is suitable.
+
+---
+
+## 🌟 Features
+
+* Multi-agent architecture (modular design)
+* AI-powered explanations using Gemini
+* Clean and beginner-friendly UI
+* JSON-based configurable dataset
+* Easy to extend and customize
+
+---
+
+## ⚠️ Limitations
+
+* Currently based only on experience level
+* Limited dataset (static recommendations)
+* Decision agent uses simple logic (no ranking)
+
+---
+
+## 📌 Future Improvements
+
+* Add project type (Web, AI, Mobile)
+* Provide multiple recommendations with ranking
+* Add user preferences and goals
+* Improve decision-making logic
+* Deploy on cloud platforms
+
+---
+
+## 🔐 Security Notes
+
+* Do NOT commit `.env` file
+* Keep API keys private
+* Use environment variables or Streamlit secrets
+
+---
+
+## 📄 License
+
+This project is for educational purposes.
+
+---
+
+## 🙌 Acknowledgment
+
+Inspired by multi-agent systems and AI-based recommendation engines.
+
+---

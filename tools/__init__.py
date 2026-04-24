@@ -1,4 +1,4 @@
-from tools.catalog import product_catalog_tool
-from tools.search import tavily_search_tool
+from tools.tech_catalog import tech_catalog_tool
+from tools.tech_search import search_tech_stack
 
-__all__ = ["product_catalog_tool", "tavily_search_tool"]
+__all__ = ["tech_catalog_tool", "search_tech_stack"]

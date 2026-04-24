@@ -1,0 +1,23 @@
+[
+  {
+    "level": "beginner",
+    "frontend": "React",
+    "backend": "Node.js",
+    "database": "MongoDB",
+    "hosting": "Vercel"
+  },
+  {
+    "level": "intermediate",
+    "frontend": "Angular",
+    "backend": "Django",
+    "database": "PostgreSQL",
+    "hosting": "AWS"
+  },
+  {
+    "level": "expert",
+    "frontend": "Next.js",
+    "backend": "Spring Boot",
+    "database": "MySQL",
+    "hosting": "AWS"
+  }
+]
