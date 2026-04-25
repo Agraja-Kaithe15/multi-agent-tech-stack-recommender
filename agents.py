@@ -2,6 +2,7 @@
 import google.generativeai as genai
 import os
 from config import GOOGLE_API_KEY, GEMINI_MODEL
+print("MODEL BEING USED:", GEMINI_MODEL)
 from tools.tech_search import search_tech_stack
 from tavily import TavilyClient
 
