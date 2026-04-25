@@ -175,3 +175,39 @@ This project is for educational purposes.
 Inspired by multi-agent systems and AI-based recommendation engines.
 
 ---
+
+## 🏗️ Architecture Diagram
+
+![Architecture Diagram](architecture.png)
+
+### 📊 System Flow
+
+The system follows a **multi-agent pipeline architecture**:
+
+1. **User (Streamlit UI)**
+   - Provides experience level input
+
+2. **Analyzer Agent**
+   - Interprets and standardizes user input
+
+3. **Research Agent**
+   - Retrieves relevant technologies from dataset
+
+4. **Decision Agent**
+   - Selects the most suitable tech stack
+
+5. **Explanation Agent**
+   - Uses Gemini API to generate reasoning
+
+6. **Output**
+   - Displays recommended stack + explanation in UI
+
+---
+
+### 🔗 External Components
+
+- **Google Gemini API** → AI explanation  
+- **JSON Dataset** → Tech stack data  
+- *(Optional)* Tavily API → real-time search  
+
+---
